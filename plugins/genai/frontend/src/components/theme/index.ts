@@ -11,18 +11,4 @@
  * limitations under the License.
  */
 
-export interface ChatMessage {
-  payload: string;
-  type: string;
-  tools: ToolRecord[];
-}
-
-export interface ToolRecord {
-  name: string;
-  input: string;
-}
-
-export interface SuggestedPrompt {
-  title: string;
-  prompt: string;
-}
+export { chatColors, chatStyleConstants } from './chatTheme';

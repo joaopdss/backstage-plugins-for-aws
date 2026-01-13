@@ -13,38 +13,63 @@
  */
 
 import { configApiRef, useApi } from '@backstage/core-plugin-api';
-import { Page, Header, Content, InfoCard } from '@backstage/core-components';
+import { Page, Content } from '@backstage/core-components';
 import { ChatHistoryComponent } from '../ChatHistoryComponent';
 import { ChatInputComponent } from '../ChatInputComponent';
 import { useParams } from 'react-router-dom';
 import { LinearProgress, makeStyles } from '@material-ui/core';
 import { useChatSession } from '../../hooks';
+import { SuggestedPrompt } from '../types';
+import { chatColors } from '../theme';
 
-const useStyles = makeStyles({
-  flex: {
+const useStyles = makeStyles(theme => ({
+  chatContainer: {
     display: 'flex',
-    height: '100%',
     flexDirection: 'column',
+    height: '100%',
+    backgroundColor:
+      theme.palette.type === 'dark'
+        ? chatColors.dark.background
+        : chatColors.gray50,
   },
-
-  grow: {
+  messagesArea: {
     flexGrow: 1,
-    minHeight: 'max-content',
-    maxHeight: '100%',
-    marginBottom: '1rem',
+    minHeight: 0,
+    overflow: 'hidden',
   },
+}));
 
-  chatInputContainer: {
-    margin: '1rem',
+// Default suggested prompts
+const defaultSuggestedPrompts: SuggestedPrompt[] = [
+  {
+    title: 'Show me an overview of our Backstage ecosystem',
+    prompt: 'Show me an overview of our Backstage ecosystem',
   },
-});
+  {
+    title: 'List all available Software Templates',
+    prompt: 'List all available Software Templates',
+  },
+  {
+    title: 'Which users and groups are registered in the system?',
+    prompt: 'Which users and groups are registered in the system?',
+  },
+];
 
-export const AgentPage = ({ title = 'Chat Assistant' }: { title?: string }) => {
+export interface AgentPageProps {
+  assistantName?: string;
+  suggestedPrompts?: SuggestedPrompt[];
+}
+
+export const AgentPage = ({
+  assistantName = 'AI Assistant',
+  suggestedPrompts = defaultSuggestedPrompts,
+}: AgentPageProps) => {
   const classes = useStyles();
 
   const config = useApi(configApiRef);
   const showInformation =
     config.getOptionalBoolean('genai.chat.showInformation') ?? false;
+
 
   const params = useParams() as { agentName: string };
   const agentName = params.agentName;
@@ -64,6 +89,10 @@ export const AgentPage = ({ title = 'Chat Assistant' }: { title?: string }) => {
     agentName,
   });
 
+  const handleSuggestedPromptClick = (prompt: string) => {
+    onUserMessage(prompt);
+  };
+
   if (isInitializing) {
     return (
       <Content>
@@ -74,25 +103,23 @@ export const AgentPage = ({ title = 'Chat Assistant' }: { title?: string }) => {
 
   return (
     <Page themeId="tool">
-      <Header title={title} />
       <Content noPadding>
-        <div className={classes.flex}>
+        <div className={classes.chatContainer}>
           <ChatHistoryComponent
             messages={messages}
-            className={classes.grow}
+            className={classes.messagesArea}
             isStreaming={isLoading}
             showInformation={showInformation}
+            assistantName={assistantName}
+            suggestedPrompts={suggestedPrompts}
+            onSuggestedPromptClick={handleSuggestedPromptClick}
           />
-          <div className={classes.chatInputContainer}>
-            <InfoCard>
-              <ChatInputComponent
-                onMessage={onUserMessage}
-                disabled={isLoading}
-                onClear={onClear}
-                onCancel={onCancel}
-              />
-            </InfoCard>
-          </div>
+          <ChatInputComponent
+            onMessage={onUserMessage}
+            disabled={isLoading}
+            onClear={onClear}
+            onCancel={onCancel}
+          />
         </div>
       </Content>
     </Page>

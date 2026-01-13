@@ -12,32 +12,116 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import { IconButton, makeStyles, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import StopIcon from '@material-ui/icons/Stop';
+import { chatColors, chatStyleConstants } from '../theme';
 
-const useStyles = makeStyles({
-  ChatInputLayout: {
-    display: 'flex',
-    flexDirection: 'row',
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: '16px 24px',
+    backgroundColor: 'transparent',
   },
-
-  ChatInputContainer: {
+  inputWrapper: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    gap: '8px',
+    backgroundColor:
+      theme.palette.type === 'dark'
+        ? chatColors.dark.paper
+        : chatColors.white,
+    borderRadius: chatStyleConstants.borderRadius.large,
+    padding: '8px 16px',
+    boxShadow: chatStyleConstants.shadows.medium,
+    border: `1px solid ${
+      theme.palette.type === 'dark'
+        ? 'rgba(255,255,255,0.1)'
+        : chatColors.gray200
+    }`,
+    transition: chatStyleConstants.transitions.normal,
+    '&:focus-within': {
+      borderColor: chatColors.primaryBright,
+      boxShadow: `${chatStyleConstants.shadows.medium}, 0 0 0 2px ${chatColors.primaryLight}`,
+    },
+  },
+  attachButton: {
+    width: '40px',
+    height: '40px',
+    color: chatColors.gray600,
+    '&:hover': {
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? chatColors.dark.paperLight
+          : chatColors.gray100,
+    },
+  },
+  textField: {
     flex: 1,
+    '& .MuiOutlinedInput-root': {
+      borderRadius: chatStyleConstants.borderRadius.medium,
+      '& fieldset': {
+        border: 'none',
+      },
+    },
+    '& .MuiInputBase-input': {
+      padding: '10px 0',
+      color:
+        theme.palette.type === 'dark'
+          ? chatColors.dark.textPrimary
+          : chatColors.gray900,
+      '&::placeholder': {
+        color:
+          theme.palette.type === 'dark'
+            ? chatColors.dark.textSecondary
+            : chatColors.gray600,
+        opacity: 1,
+      },
+    },
+    '& .MuiInputBase-root': {
+      backgroundColor: 'transparent',
+    },
   },
-
-  ChatInputButtons: {
-    marginLeft: '0.5rem',
-    display: 'flex',
-    alignItems: 'center',
+  sendButton: {
+    width: '44px',
+    height: '44px',
+    backgroundColor: chatColors.primaryBright,
+    color: chatColors.white,
+    boxShadow: chatStyleConstants.shadows.subtle,
+    transition: chatStyleConstants.transitions.normal,
+    '&:hover': {
+      backgroundColor: chatColors.primaryDark,
+      boxShadow: chatStyleConstants.shadows.medium,
+    },
+    '&:disabled': {
+      backgroundColor: chatColors.gray300,
+      color: chatColors.gray600,
+    },
   },
-
-  ChatInputButton: {
-    marginLeft: '0.5rem',
-    minWidth: '36px',
-    padding: '10px',
+  cancelButton: {
+    width: '44px',
+    height: '44px',
+    backgroundColor: chatColors.error,
+    color: chatColors.white,
+    '&:hover': {
+      backgroundColor: '#d32f2f',
+    },
   },
-});
+  clearButton: {
+    width: '40px',
+    height: '40px',
+    color: chatColors.gray600,
+    transition: chatStyleConstants.transitions.normal,
+    '&:hover': {
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? chatColors.dark.paperLight
+          : chatColors.gray100,
+      color: chatColors.error,
+    },
+  },
+}));
 
 interface ChatInputComponentProps {
   onMessage: (message: string) => void;
@@ -65,8 +149,10 @@ export const ChatInputComponent = ({
   }, [disabled]);
 
   const processMessage = () => {
-    onMessage(message);
-    setMessage('');
+    if (message.trim()) {
+      onMessage(message);
+      setMessage('');
+    }
   };
 
   const checkKeyPress = (evt: React.KeyboardEvent<HTMLInputElement>) => {
@@ -79,60 +165,57 @@ export const ChatInputComponent = ({
   };
 
   return (
-    <div>
-      <div className={classes.ChatInputLayout}>
-        <div className={classes.ChatInputContainer}>
-          <TextField
-            id="outlined-multiline-flexible"
-            label="Type a message"
-            multiline
-            variant="outlined"
-            value={message}
-            style={{
-              marginRight: '1rem',
-            }}
-            maxRows={8}
-            minRows={1}
-            onKeyDown={checkKeyPress}
-            onChange={evt => setMessage(evt.target.value)}
-            fullWidth
-            disabled={disabled}
-            ref={inputRef}
-          />
-        </div>
-        <div className={classes.ChatInputButtons}>
-          {disabled && onCancel ? (
-            <Button
-              title="Cancel"
-              onClick={onCancel}
-              variant="contained"
-              color="secondary"
-              className={classes.ChatInputButton}
-            >
-              Cancel
-            </Button>
-          ) : (
-            <Button
-              title="Send"
-              onClick={processMessage}
-              disabled={!message.trim()}
-              variant="contained"
-              color="primary"
-              className={classes.ChatInputButton}
-            >
-              <SendIcon />
-            </Button>
-          )}
-          <Button
-            title="Clear"
-            onClick={onClear}
-            disabled={disabled}
-            variant="text"
-            className={classes.ChatInputButton}
+    <div className={classes.container}>
+      <div className={classes.inputWrapper}>
+        <IconButton
+          className={classes.attachButton}
+          title="Attach file"
+          disabled
+        >
+          <AttachFileIcon />
+        </IconButton>
+        <TextField
+          placeholder="Type a message..."
+          multiline
+          value={message}
+          maxRows={8}
+          minRows={1}
+          onKeyDown={checkKeyPress}
+          onChange={evt => setMessage(evt.target.value)}
+          fullWidth
+          disabled={disabled}
+          ref={inputRef}
+          className={classes.textField}
+          InputProps={{
+            disableUnderline: true,
+          }}
+        />
+        {disabled && onCancel ? (
+          <IconButton
+            title="Cancel"
+            onClick={onCancel}
+            className={classes.cancelButton}
           >
-            <DeleteIcon />
-          </Button>
-        </div>
+            <StopIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            title="Send"
+            onClick={processMessage}
+            disabled={!message.trim()}
+            className={classes.sendButton}
+          >
+            <SendIcon />
+          </IconButton>
+        )}
+        <IconButton
+          title="Clear conversation"
+          onClick={onClear}
+          disabled={disabled}
+          className={classes.clearButton}
+        >
+          <DeleteIcon />
+        </IconButton>
       </div>
     </div>
   );

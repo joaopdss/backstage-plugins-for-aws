@@ -11,115 +11,152 @@
  * limitations under the License.
  */
 
-import { EmptyState, MarkdownContent } from '@backstage/core-components';
+import { MarkdownContent } from '@backstage/core-components';
 import React, { useEffect, useRef } from 'react';
 
-import { ChatMessage, ToolRecord } from '../types';
+import { ChatMessage, SuggestedPrompt, ToolRecord } from '../types';
 import { Avatar } from '@material-ui/core';
-import Person from '@material-ui/icons/Person';
-import School from '@material-ui/icons/School';
 import Info from '@material-ui/icons/Info';
 import Error from '@material-ui/icons/Error';
+import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import { ToolsModal } from './ToolsModal';
 import { makeStyles } from '@material-ui/core';
+import { WelcomeScreen } from '../WelcomeScreen';
+import { chatColors, chatStyleConstants } from '../theme';
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '0',
+    height: '100%',
+    backgroundColor:
+      theme.palette.type === 'dark'
+        ? chatColors.dark.background
+        : chatColors.gray50,
   },
-
-  markdownContainer: {
+  messagesArea: {
     flexGrow: 1,
-    position: 'relative',
-  },
-
-  markdown: {
-    position: 'absolute',
-    left: 0,
-    top: '1rem',
-    right: 0,
-    bottom: '1rem',
-    padding: '0 2rem',
     overflow: 'auto',
+    padding: '16px 24px',
   },
-
-  ChatItem: {
+  // User message - right aligned
+  userMessageContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: '16px',
+  },
+  userBubble: {
+    maxWidth: '70%',
+    padding: '12px 16px',
+    borderRadius: '16px 16px 4px 16px',
+    backgroundColor:
+      theme.palette.type === 'dark' ? chatColors.gray800 : chatColors.gray200,
+    color:
+      theme.palette.type === 'dark'
+        ? chatColors.white
+        : chatColors.gray900,
+    boxShadow: chatStyleConstants.shadows.subtle,
+    fontSize: '15px',
+    lineHeight: 1.5,
+  },
+  // Assistant message - left aligned with avatar
+  assistantMessageContainer: {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    width: '100%',
-    marginBottom: '1rem',
-    fontSize: '16px',
-    background: theme.palette.background.default,
-    borderRadius: '7px',
-    padding: '10px',
-
-    '& $ChatItemAvatarIcon': {
-      backgroundColor: theme.palette.type === 'dark' ? '#B3B3B3' : '#757575',
-      color: 'white',
+    marginBottom: '16px',
+    gap: '12px',
+  },
+  assistantAvatar: {
+    width: '36px',
+    height: '36px',
+    backgroundColor: chatColors.primaryDark,
+    color: chatColors.white,
+    flexShrink: 0,
+    '& svg': {
+      fontSize: '20px',
     },
   },
-
-  ChatItemExpert: {
-    background: theme.palette.background.paper,
-
-    '& $ChatItemAvatarIcon': {
-      backgroundColor: '#f59d12',
-    },
+  assistantBubble: {
+    maxWidth: '70%',
+    minWidth: '120px',
+    padding: '12px 16px',
+    borderRadius: '16px 16px 16px 4px',
+    backgroundColor:
+      theme.palette.type === 'dark'
+        ? chatColors.dark.paper
+        : chatColors.white,
+    color:
+      theme.palette.type === 'dark'
+        ? chatColors.dark.textPrimary
+        : chatColors.gray900,
+    boxShadow: chatStyleConstants.shadows.subtle,
+    border: `1px solid ${
+      theme.palette.type === 'dark'
+        ? 'rgba(255,255,255,0.05)'
+        : chatColors.gray100
+    }`,
+    fontSize: '15px',
+    lineHeight: 1.5,
+    wordWrap: 'break-word',
+    overflowWrap: 'break-word',
   },
-
-  ChatItemCustomer: {},
-
-  ChatItemMeta: {
+  // Error message
+  errorAvatar: {
+    backgroundColor: chatColors.errorDark,
+  },
+  errorBubble: {
+    backgroundColor: chatColors.errorLight,
+    borderColor: chatColors.error,
+    color: chatColors.errorDark,
+  },
+  // Tool info icon
+  toolIconContainer: {
     display: 'flex',
     alignItems: 'center',
-    flex: '0 1 auto',
-    marginRight: '1rem',
-    marginBottom: '0.5rem',
-    width: '2.5rem',
+    marginTop: '8px',
   },
-
-  ChatItemContent: {
-    position: 'relative',
-    flex: '1 0 auto',
-    width: '100%',
-  },
-
-  ChatItemToolIcon: {
-    marginTop: '20px',
+  toolIcon: {
     cursor: 'pointer',
+    color: chatColors.gray600,
+    fontSize: '18px',
+    '&:hover': {
+      color: chatColors.primaryBright,
+    },
   },
-
-  ChatItemAvatarContainer: {
-    marginTop: '10px',
-    marginBottom: '10px',
-    width: '100px',
-    height: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  ChatItemAvatarIcon: {
-    color: theme.palette.text.primary,
-  },
-
-  ChatItemChatText: {
-    position: 'relative',
+  // Markdown content styling
+  markdownContent: {
     width: '100%',
-    lineHeight: '1.3',
-    marginTop: '5px',
-  },
-
-  ChatItemError: {
-    background: '#fcf2f2',
-    color: '#5b2e2e',
-
-    '& $ChatItemAvatarIcon': {
-      backgroundColor: '#5b2e2e',
+    wordWrap: 'break-word',
+    overflowWrap: 'break-word',
+    '& p': {
+      margin: 0,
+    },
+    '& p + p': {
+      marginTop: '8px',
+    },
+    '& pre': {
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? chatColors.dark.paperLight
+          : chatColors.gray100,
+      borderRadius: '8px',
+      padding: '12px',
+      overflow: 'auto',
+      maxWidth: '100%',
+    },
+    '& code': {
+      backgroundColor:
+        theme.palette.type === 'dark'
+          ? chatColors.dark.paperLight
+          : chatColors.gray100,
+      padding: '2px 6px',
+      borderRadius: '4px',
+      fontSize: '13px',
+    },
+    '& pre code': {
+      backgroundColor: 'transparent',
+      padding: 0,
     },
   },
 }));
@@ -129,36 +166,18 @@ export interface ChatHistoryComponentProps {
   isStreaming?: boolean;
   className?: string;
   showInformation: boolean;
-}
-
-function getMessageExtraClass(message: ChatMessage, classes: any): string {
-  if (message.type === 'user') {
-    return classes.ChatItemCustomer;
-  }
-
-  if (message.type === 'error') {
-    return classes.ChatItemError;
-  }
-
-  return classes.ChatItemExpert;
-}
-
-function getMessageIcon(message: ChatMessage) {
-  if (message.type === 'user') {
-    return <Person />;
-  }
-
-  if (message.type === 'error') {
-    return <Error />;
-  }
-
-  return <School />;
+  assistantName?: string;
+  suggestedPrompts?: SuggestedPrompt[];
+  onSuggestedPromptClick?: (prompt: string) => void;
 }
 
 export const ChatHistoryComponent = ({
   messages,
   className,
   showInformation,
+  assistantName,
+  suggestedPrompts = [],
+  onSuggestedPromptClick,
 }: ChatHistoryComponentProps) => {
   const classes = useStyles();
 
@@ -182,53 +201,83 @@ export const ChatHistoryComponent = ({
     setOpen(false);
   };
 
-  return (
-    <div className={`${className} ${classes.container}`}>
-      <div className={classes.markdownContainer}>
-        <div className={classes.markdown} ref={contentRef}>
-          {messages!.length === 0 && (
-            <EmptyState
-              missing="data"
-              title="Start chatting!"
-              description="This assistant can answer questions for you, type a message below to get started."
-            />
-          )}
+  const handlePromptClick = (prompt: string) => {
+    if (onSuggestedPromptClick) {
+      onSuggestedPromptClick(prompt);
+    }
+  };
 
-          {messages!.length > 0 &&
-            messages?.map((message, index) => (
-              <div
-                key={index}
-                className={`${classes.ChatItem} ${getMessageExtraClass(
-                  message,
-                  classes,
-                )}`}
-              >
-                <div className={`${classes.ChatItemAvatarContainer}`}>
-                  <div>
-                    <Avatar className={classes.ChatItemAvatarIcon}>
-                      {getMessageIcon(message)}
-                    </Avatar>
+  // Show welcome screen when no messages
+  if (!messages || messages.length === 0) {
+    return (
+      <div className={`${className || ''} ${classes.container}`}>
+        <WelcomeScreen
+          assistantName={assistantName}
+          suggestedPrompts={suggestedPrompts}
+          onPromptClick={handlePromptClick}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={`${className || ''} ${classes.container}`}>
+      <div className={classes.messagesArea} ref={contentRef}>
+        {messages.map((message, index) => {
+          const isUser = message.type === 'user';
+          const isError = message.type === 'error';
+
+          if (isUser) {
+            return (
+              <div key={index} className={classes.userMessageContainer}>
+                <div className={classes.userBubble}>
+                  <div className={classes.markdownContent}>
+                    <MarkdownContent content={message.payload} dialect="gfm" />
                   </div>
-                  {message.tools.length > 0 && showInformation && (
-                    <Info
-                      className={classes.ChatItemToolIcon}
-                      onClick={() => handleOpen(message)}
-                    />
-                  )}
-                </div>
-                <div className={`${classes.ChatItemChatText}`}>
-                  <MarkdownContent
-                    content={
-                      message.payload.length === 0
-                        ? 'Working...'
-                        : message.payload
-                    }
-                    dialect="gfm"
-                  />
                 </div>
               </div>
-            ))}
-        </div>
+            );
+          }
+
+          // Assistant or error message
+          return (
+            <div key={index} className={classes.assistantMessageContainer}>
+              <Avatar
+                className={`${classes.assistantAvatar} ${
+                  isError ? classes.errorAvatar : ''
+                }`}
+              >
+                {isError ? <Error /> : <EmojiObjectsOutlinedIcon />}
+              </Avatar>
+              <div>
+                <div
+                  className={`${classes.assistantBubble} ${
+                    isError ? classes.errorBubble : ''
+                  }`}
+                >
+                  <div className={classes.markdownContent}>
+                    <MarkdownContent
+                      content={
+                        message.payload.length === 0
+                          ? 'Working...'
+                          : message.payload
+                      }
+                      dialect="gfm"
+                    />
+                  </div>
+                </div>
+                {message.tools.length > 0 && showInformation && (
+                  <div className={classes.toolIconContainer}>
+                    <Info
+                      className={classes.toolIcon}
+                      onClick={() => handleOpen(message)}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
       <ToolsModal open={open} onClose={handleClose} tools={tools} />
     </div>
