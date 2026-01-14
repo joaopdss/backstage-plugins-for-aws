@@ -13,23 +13,37 @@
 
 import { ChatEvent } from '@aws/genai-plugin-for-backstage-common';
 import { StreamEvent } from '@langchain/core/dist/tracers/event_stream';
-import { AIMessageChunk } from '@langchain/core/messages';
+import { AIMessageChunk, AIMessage } from '@langchain/core/messages';
+import { LoggerService } from '@backstage/backend-plugin-api';
+
+// Claude Haiku 4.5 pricing (USD per 1k tokens)
+const INPUT_TOKEN_PRICE = 0.0011;
+const OUTPUT_TOKEN_PRICE = 0.0055;
 
 export class ResponseTransformStream extends TransformStream<
   StreamEvent,
   ChatEvent
 > {
-  constructor(sessionId: string) {
+  private totalInputTokens = 0;
+  private totalOutputTokens = 0;
+  private sessionId: string;
+  private logger: LoggerService;
+
+  constructor(sessionId: string, logger: LoggerService) {
+    let instance: ResponseTransformStream;
     super({
       start: controller => {
+        instance = this;
         controller.enqueue({
           type: 'ResponseEvent',
           sessionId,
         });
       },
-      transform: (chunk, controller) => this.transform(chunk, controller),
-      flush: controller => this.flush(controller),
+      transform: (chunk, controller) => instance.transform(chunk, controller),
+      flush: controller => instance.flush(controller),
     });
+    this.sessionId = sessionId;
+    this.logger = logger;
   }
 
   transform(
@@ -50,6 +64,13 @@ export class ResponseTransformStream extends TransformStream<
         });
       }
     } else if (event === 'on_chat_model_end') {
+      // Extract token usage from the output message
+      const output = data.output as AIMessage;
+      if (output?.usage_metadata) {
+        this.totalInputTokens += output.usage_metadata.input_tokens || 0;
+        this.totalOutputTokens += output.usage_metadata.output_tokens || 0;
+      }
+
       controller.enqueue({
         type: 'ChunkEvent',
         token: '\n\n',
@@ -66,6 +87,20 @@ export class ResponseTransformStream extends TransformStream<
   }
 
   flush(controller: TransformStreamDefaultController<ChatEvent>) {
+    // Calculate costs
+    const inputCost = (this.totalInputTokens / 1000) * INPUT_TOKEN_PRICE;
+    const outputCost = (this.totalOutputTokens / 1000) * OUTPUT_TOKEN_PRICE;
+    const totalCost = inputCost + outputCost;
+    const totalTokens = this.totalInputTokens + this.totalOutputTokens;
+
+    // Log token usage and costs
+    this.logger.info(
+      `[Token Usage] Session: ${this.sessionId} | ` +
+        `Input: ${this.totalInputTokens} tokens ($${inputCost.toFixed(6)}) | ` +
+        `Output: ${this.totalOutputTokens} tokens ($${outputCost.toFixed(6)}) | ` +
+        `Total: ${totalTokens} tokens ($${totalCost.toFixed(6)})`,
+    );
+
     controller.terminate();
   }
 }

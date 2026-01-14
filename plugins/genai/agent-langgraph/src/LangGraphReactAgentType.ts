@@ -236,7 +236,7 @@ export class LangGraphReactAgentType implements AgentType {
     newSession: boolean,
     agentActions: ActionsServiceAction[],
     peerAgentTools: PeerAgentToolInstance[],
-    _: LoggerService,
+    logger: LoggerService,
     options: {
       userEntityRef?: CompoundEntityRef;
       credentials: BackstageCredentials;
@@ -306,7 +306,7 @@ export class LangGraphReactAgentType implements AgentType {
     );
 
     const stream = eventStreamFinalRes.pipeThrough(
-      new ResponseTransformStream(sessionId),
+      new ResponseTransformStream(sessionId, logger),
     );
 
     return new ReadableStream({
