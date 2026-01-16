@@ -20,7 +20,7 @@ import {
   GenerateRequest,
   ChatEvent,
   EndSessionRequest,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { McpService } from './McpService';
 import { Validator } from 'jsonschema';

@@ -17,7 +17,7 @@ import {
   ChatRequest,
   ChatSession,
   EndSessionRequest,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 
 export const agentApiRef = createApiRef<AgentApi>({
   id: 'plugin.aws-genai-agent.service',

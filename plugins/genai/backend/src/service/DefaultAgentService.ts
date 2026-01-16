@@ -28,16 +28,16 @@ import { Agent } from '../agent/Agent';
 import {
   AgentTypeFactory,
   PeerAgentRunner,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import {
   ChatEvent,
   ChatSession,
   GenerateResponse,
   SyncResponse,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 import { SessionStore } from '../database';
 import { ActionsService } from '@backstage/backend-plugin-api/alpha';
-import { PeerAgentTool } from '@aws/genai-plugin-for-backstage-node';
+import { PeerAgentTool } from '@joaopdss/genai-plugin-for-backstage-node';
 
 export class DefaultAgentService implements AgentService {
   public constructor(

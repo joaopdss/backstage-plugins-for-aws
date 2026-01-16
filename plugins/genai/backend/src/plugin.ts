@@ -22,7 +22,7 @@ import {
   agentToolExtensionPoint,
   agentTypeExtensionPoint,
   AgentTypeFactory,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import { ToolInterface } from '@langchain/core/tools';
 import { DatabaseSessionStore } from './database';
 import { McpService } from './service/McpService';

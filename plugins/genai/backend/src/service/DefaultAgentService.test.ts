@@ -17,7 +17,7 @@ import {
   ChatEvent,
   ChatSession,
   GenerateResponse,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 import { mockCredentials, mockServices } from '@backstage/backend-test-utils';
 import { SessionStore } from '../database';
 

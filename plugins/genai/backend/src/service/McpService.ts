@@ -18,7 +18,7 @@ import {
   ListToolsRequestSchema,
   CallToolRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { version } from '@aws/genai-plugin-for-backstage-backend/package.json';
+import { version } from '@joaopdss/genai-plugin-for-backstage-backend/package.json';
 
 export class McpService {
   public constructor(private readonly agentService: AgentService) {}

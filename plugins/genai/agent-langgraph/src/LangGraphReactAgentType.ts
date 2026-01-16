@@ -33,8 +33,10 @@ import {
 import { DynamicStructuredTool, ToolInterface } from '@langchain/core/tools';
 import {
   InvokeAgentTool,
-  ResponseTransformStream,
+  createResponseTransformStream,
+  logTokenUsage,
   tiktokenCounter,
+  TokenUsageTracker,
 } from './util';
 import { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import {
@@ -47,11 +49,11 @@ import {
   AgentConfig,
   AgentType,
   PeerAgentToolInstance,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import {
   ChatEvent,
   GenerateResponse,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 import { CallbackHandler } from 'langfuse-langchain';
 import { SqliteSaver } from '@langchain/langgraph-checkpoint-sqlite';
 import { PostgresSaver } from '@langchain/langgraph-checkpoint-postgres';
@@ -305,8 +307,13 @@ export class LangGraphReactAgentType implements AgentType {
       },
     );
 
+    const usageTracker: TokenUsageTracker = {
+      totalInputTokens: 0,
+      totalOutputTokens: 0,
+    };
+
     const stream = eventStreamFinalRes.pipeThrough(
-      new ResponseTransformStream(sessionId, logger),
+      createResponseTransformStream(sessionId, logger, usageTracker),
     );
 
     return new ReadableStream({
@@ -327,6 +334,8 @@ export class LangGraphReactAgentType implements AgentType {
           controller.error(error);
         } finally {
           reader.releaseLock();
+          // Log token usage after stream completes
+          logTokenUsage(sessionId, usageTracker, logger);
         }
       },
     });

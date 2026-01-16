@@ -1,10 +1,10 @@
 {
-  "name": "@aws/genai-plugin-for-backstage-backend",
+  "name": "@joaopdss/genai-plugin-for-backstage-backend",
   "description": "Backend package for the GenAI AWS plugins for Backstage",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "repository": {
     "type": "git",
-    "url": "github:awslabs/backstage-plugins-for-aws",
+    "url": "github:joaopdss/backstage-plugins-for-aws",
     "directory": "plugins/genai/backend"
   },
   "main": "src/index.ts",
@@ -19,10 +19,10 @@
     "role": "backend-plugin",
     "pluginId": "aws-genai",
     "pluginPackages": [
-      "@aws/genai-plugin-for-backstage",
-      "@aws/genai-plugin-for-backstage-backend",
-      "@aws/genai-plugin-for-backstage-common",
-      "@aws/genai-plugin-for-backstage-node"
+      "@joaopdss/genai-plugin-for-backstage",
+      "@joaopdss/genai-plugin-for-backstage-backend",
+      "@joaopdss/genai-plugin-for-backstage-common",
+      "@joaopdss/genai-plugin-for-backstage-node"
     ]
   },
   "configSchema": "config.d.ts",
@@ -36,8 +36,6 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@aws/genai-plugin-for-backstage-common": "workspace:^",
-    "@aws/genai-plugin-for-backstage-node": "workspace:^",
     "@backstage/backend-common": "^0.25.0",
     "@backstage/backend-defaults": "^0.12.1",
     "@backstage/backend-plugin-api": "^1.4.3",
@@ -46,6 +44,8 @@
     "@backstage/config": "^1.3.3",
     "@backstage/plugin-catalog-node": "^1.19.0",
     "@backstage/plugin-search-common": "^1.2.19",
+    "@joaopdss/genai-plugin-for-backstage-common": "^0.5.1",
+    "@joaopdss/genai-plugin-for-backstage-node": "^0.5.1",
     "@langchain/core": "0.3.57",
     "@modelcontextprotocol/sdk": "^1.12.3",
     "@types/express": "^4.17.17",

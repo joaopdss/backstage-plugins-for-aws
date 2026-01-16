@@ -16,7 +16,7 @@ import {
   ChatSession,
   GenerateResponse,
   SyncResponse,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 import { BackstageCredentials } from '@backstage/backend-plugin-api';
 import { Agent } from '../agent/Agent';
 

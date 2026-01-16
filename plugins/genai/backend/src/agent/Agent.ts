@@ -22,16 +22,16 @@ import {
   AgentConfig,
   AgentType,
   AgentTypeFactory,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import {
   ChatEvent,
   GenerateResponse,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 import { ActionsService } from '@backstage/backend-plugin-api/alpha';
 import {
   PeerAgentTool,
   PeerAgentToolInstance,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 
 export class Agent {
   constructor(

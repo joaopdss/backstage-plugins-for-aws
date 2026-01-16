@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-import { ChatSession } from '@aws/genai-plugin-for-backstage-common';
+import { ChatSession } from '@joaopdss/genai-plugin-for-backstage-common';
 import {
   DatabaseService,
   resolvePackagePath,
@@ -54,7 +54,7 @@ export interface SessionStore {
 }
 
 const migrationsDir = resolvePackagePath(
-  '@aws/genai-plugin-for-backstage-backend',
+  '@joaopdss/genai-plugin-for-backstage-backend',
   'migrations',
 );
 

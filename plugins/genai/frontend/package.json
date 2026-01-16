@@ -1,10 +1,10 @@
 {
-  "name": "@aws/genai-plugin-for-backstage",
+  "name": "@joaopdss/genai-plugin-for-backstage",
   "description": "Frontend package for the GenAI AWS plugins for Backstage",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "repository": {
     "type": "git",
-    "url": "github:awslabs/backstage-plugins-for-aws",
+    "url": "github:joaopdss/backstage-plugins-for-aws",
     "directory": "plugins/genai/frontend"
   },
   "main": "src/index.ts",
@@ -19,10 +19,10 @@
     "role": "frontend-plugin",
     "pluginId": "aws-genai",
     "pluginPackages": [
-      "@aws/genai-plugin-for-backstage",
-      "@aws/genai-plugin-for-backstage-backend",
-      "@aws/genai-plugin-for-backstage-common",
-      "@aws/genai-plugin-for-backstage-node"
+      "@joaopdss/genai-plugin-for-backstage",
+      "@joaopdss/genai-plugin-for-backstage-backend",
+      "@joaopdss/genai-plugin-for-backstage-common",
+      "@joaopdss/genai-plugin-for-backstage-node"
     ]
   },
   "configSchema": "config.d.ts",
@@ -37,9 +37,9 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@aws/genai-plugin-for-backstage-common": "workspace:^",
     "@backstage/core-components": "^0.18.0",
     "@backstage/core-plugin-api": "^1.11.0",
+    "@joaopdss/genai-plugin-for-backstage-common": "^0.5.1",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.9.1",
     "eventsource-parser": "^2.0.1",

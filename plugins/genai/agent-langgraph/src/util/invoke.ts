@@ -14,7 +14,7 @@
 import {
   PeerAgentResponse,
   PeerAgentToolInstance,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import { Tool } from '@langchain/core/tools';
 
 export class InvokeAgentTool extends Tool {

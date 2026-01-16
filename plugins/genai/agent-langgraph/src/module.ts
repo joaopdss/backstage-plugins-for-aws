@@ -18,7 +18,7 @@ import {
 import {
   AgentConfig,
   agentTypeExtensionPoint,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import { LangGraphReactAgentType } from './LangGraphReactAgentType';
 import { ToolInterface } from '@langchain/core/tools';
 import { actionsServiceRef } from '@backstage/backend-plugin-api/alpha';

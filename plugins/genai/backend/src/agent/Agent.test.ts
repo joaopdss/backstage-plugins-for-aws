@@ -15,7 +15,7 @@ import { Agent } from './Agent';
 import {
   AgentConfig,
   AgentTypeFactory,
-} from '@aws/genai-plugin-for-backstage-node';
+} from '@joaopdss/genai-plugin-for-backstage-node';
 import { Toolkit } from '../tools/Toolkit';
 import { CompoundEntityRef } from '@backstage/catalog-model';
 import { mockCredentials, mockServices } from '@backstage/backend-test-utils';

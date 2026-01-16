@@ -3247,118 +3247,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@aws/genai-plugin-for-backstage-backend@workspace:^, @aws/genai-plugin-for-backstage-backend@workspace:plugins/genai/backend":
-  version: 0.0.0-use.local
-  resolution: "@aws/genai-plugin-for-backstage-backend@workspace:plugins/genai/backend"
-  dependencies:
-    "@aws/genai-plugin-for-backstage-common": "workspace:^"
-    "@aws/genai-plugin-for-backstage-node": "workspace:^"
-    "@backstage/backend-common": "npm:^0.25.0"
-    "@backstage/backend-defaults": "npm:^0.12.1"
-    "@backstage/backend-plugin-api": "npm:^1.4.3"
-    "@backstage/backend-test-utils": "npm:^1.9.0"
-    "@backstage/catalog-client": "npm:^1.12.0"
-    "@backstage/catalog-model": "npm:^1.7.5"
-    "@backstage/cli": "npm:^0.34.3"
-    "@backstage/config": "npm:^1.3.3"
-    "@backstage/plugin-auth-backend": "npm:^0.25.4"
-    "@backstage/plugin-auth-backend-module-guest-provider": "npm:^0.2.12"
-    "@backstage/plugin-catalog-node": "npm:^1.19.0"
-    "@backstage/plugin-search-common": "npm:^1.2.19"
-    "@langchain/core": "npm:0.3.57"
-    "@modelcontextprotocol/sdk": "npm:^1.12.3"
-    "@types/express": "npm:^4.17.17"
-    "@types/lodash": "npm:^4"
-    "@types/supertest": "npm:^2.0.12"
-    "@types/turndown": "npm:^5.0.5"
-    "@types/uuid": "npm:^10"
-    express: "npm:^4.17.17"
-    express-promise-router: "npm:^4.1.0"
-    jsonschema: "npm:^1.5.0"
-    knex: "npm:^3.1.0"
-    lodash: "npm:^4.17.21"
-    msw: "npm:^1.0.0"
-    node-html-parser: "npm:^7.0.1"
-    supertest: "npm:^6.2.4"
-    turndown: "npm:^7.2.0"
-    uuid: "npm:^10.0.0"
-    zod: "npm:^3.23.8"
-  languageName: unknown
-  linkType: soft
-
-"@aws/genai-plugin-for-backstage-common@workspace:^, @aws/genai-plugin-for-backstage-common@workspace:plugins/genai/common":
-  version: 0.0.0-use.local
-  resolution: "@aws/genai-plugin-for-backstage-common@workspace:plugins/genai/common"
-  dependencies:
-    "@backstage/cli": "npm:^0.34.3"
-    cross-fetch: "npm:^4.0.0"
-    uri-template: "npm:^2.0.0"
-    zod: "npm:^3.23.8"
-  languageName: unknown
-  linkType: soft
-
-"@aws/genai-plugin-for-backstage-node@workspace:^, @aws/genai-plugin-for-backstage-node@workspace:plugins/genai/node":
-  version: 0.0.0-use.local
-  resolution: "@aws/genai-plugin-for-backstage-node@workspace:plugins/genai/node"
-  dependencies:
-    "@aws/genai-plugin-for-backstage-common": "workspace:^"
-    "@backstage/backend-common": "npm:^0.25.0"
-    "@backstage/backend-plugin-api": "npm:^1.4.3"
-    "@backstage/catalog-model": "npm:^1.7.5"
-    "@backstage/cli": "npm:^0.34.3"
-    "@backstage/config": "npm:^1.3.3"
-    "@langchain/core": "npm:0.3.57"
-    aws-sdk-client-mock: "npm:^4.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@aws/genai-plugin-for-backstage@workspace:^, @aws/genai-plugin-for-backstage@workspace:plugins/genai/frontend":
-  version: 0.0.0-use.local
-  resolution: "@aws/genai-plugin-for-backstage@workspace:plugins/genai/frontend"
-  dependencies:
-    "@aws/genai-plugin-for-backstage-common": "workspace:^"
-    "@backstage/cli": "npm:^0.34.3"
-    "@backstage/core-components": "npm:^0.18.0"
-    "@backstage/core-plugin-api": "npm:^1.11.0"
-    "@backstage/dev-utils": "npm:^1.1.14"
-    "@material-ui/core": "npm:^4.12.2"
-    "@material-ui/icons": "npm:^4.9.1"
-    "@testing-library/dom": "npm:^9.0.0"
-    "@testing-library/jest-dom": "npm:^6.0.0"
-    "@testing-library/react": "npm:^14.0.0"
-    "@testing-library/user-event": "npm:^14.0.0"
-    eventsource-parser: "npm:^2.0.1"
-    msw: "npm:^1.0.0"
-    ts-pattern: "npm:^5.5.0"
-  peerDependencies:
-    react: ^16.13.1 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
-    react-router-dom: 6.0.0-beta.0 || ^6.3.0
-  languageName: unknown
-  linkType: soft
-
-"@aws/genai-plugin-langgraph-agent-for-backstage@workspace:^, @aws/genai-plugin-langgraph-agent-for-backstage@workspace:plugins/genai/agent-langgraph":
-  version: 0.0.0-use.local
-  resolution: "@aws/genai-plugin-langgraph-agent-for-backstage@workspace:plugins/genai/agent-langgraph"
-  dependencies:
-    "@aws/genai-plugin-for-backstage-common": "workspace:^"
-    "@aws/genai-plugin-for-backstage-node": "workspace:^"
-    "@backstage/backend-plugin-api": "npm:^1.4.3"
-    "@backstage/catalog-model": "npm:^1.7.5"
-    "@backstage/cli": "npm:^0.34.3"
-    "@backstage/config": "npm:^1.3.3"
-    "@backstage/types": "npm:^1.2.2"
-    "@langchain/aws": "npm:0.1.10"
-    "@langchain/core": "npm:0.3.57"
-    "@langchain/langgraph": "npm:0.2.74"
-    "@langchain/langgraph-checkpoint-postgres": "npm:^0.0.5"
-    "@langchain/langgraph-checkpoint-sqlite": "npm:^0.1.5"
-    "@langchain/openai": "npm:^0.5.11"
-    langfuse-langchain: "npm:^3.29.1"
-    zod: "npm:^3.23.8"
-  languageName: unknown
-  linkType: soft
-
 "@aws/lambda-invoke-store@npm:^0.1.1":
   version: 0.1.1
   resolution: "@aws/lambda-invoke-store@npm:0.1.1"
@@ -8967,6 +8855,118 @@ __metadata:
   checksum: 10c0/ea4e493dd3fb47933b8ccab201ae573dcc451f951dc44ed2a86123cd8541b82aa9d2b1031caf9b1080d6673c517e2dcc25a44b2dc4f3fbc37bfc965d444888c0
   languageName: node
   linkType: hard
+
+"@joaopdss/genai-plugin-for-backstage-backend@workspace:^, @joaopdss/genai-plugin-for-backstage-backend@workspace:plugins/genai/backend":
+  version: 0.0.0-use.local
+  resolution: "@joaopdss/genai-plugin-for-backstage-backend@workspace:plugins/genai/backend"
+  dependencies:
+    "@backstage/backend-common": "npm:^0.25.0"
+    "@backstage/backend-defaults": "npm:^0.12.1"
+    "@backstage/backend-plugin-api": "npm:^1.4.3"
+    "@backstage/backend-test-utils": "npm:^1.9.0"
+    "@backstage/catalog-client": "npm:^1.12.0"
+    "@backstage/catalog-model": "npm:^1.7.5"
+    "@backstage/cli": "npm:^0.34.3"
+    "@backstage/config": "npm:^1.3.3"
+    "@backstage/plugin-auth-backend": "npm:^0.25.4"
+    "@backstage/plugin-auth-backend-module-guest-provider": "npm:^0.2.12"
+    "@backstage/plugin-catalog-node": "npm:^1.19.0"
+    "@backstage/plugin-search-common": "npm:^1.2.19"
+    "@joaopdss/genai-plugin-for-backstage-common": "workspace:^"
+    "@joaopdss/genai-plugin-for-backstage-node": "workspace:^"
+    "@langchain/core": "npm:0.3.57"
+    "@modelcontextprotocol/sdk": "npm:^1.12.3"
+    "@types/express": "npm:^4.17.17"
+    "@types/lodash": "npm:^4"
+    "@types/supertest": "npm:^2.0.12"
+    "@types/turndown": "npm:^5.0.5"
+    "@types/uuid": "npm:^10"
+    express: "npm:^4.17.17"
+    express-promise-router: "npm:^4.1.0"
+    jsonschema: "npm:^1.5.0"
+    knex: "npm:^3.1.0"
+    lodash: "npm:^4.17.21"
+    msw: "npm:^1.0.0"
+    node-html-parser: "npm:^7.0.1"
+    supertest: "npm:^6.2.4"
+    turndown: "npm:^7.2.0"
+    uuid: "npm:^10.0.0"
+    zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
+
+"@joaopdss/genai-plugin-for-backstage-common@workspace:^, @joaopdss/genai-plugin-for-backstage-common@workspace:plugins/genai/common":
+  version: 0.0.0-use.local
+  resolution: "@joaopdss/genai-plugin-for-backstage-common@workspace:plugins/genai/common"
+  dependencies:
+    "@backstage/cli": "npm:^0.34.3"
+    cross-fetch: "npm:^4.0.0"
+    uri-template: "npm:^2.0.0"
+    zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
+
+"@joaopdss/genai-plugin-for-backstage-node@workspace:^, @joaopdss/genai-plugin-for-backstage-node@workspace:plugins/genai/node":
+  version: 0.0.0-use.local
+  resolution: "@joaopdss/genai-plugin-for-backstage-node@workspace:plugins/genai/node"
+  dependencies:
+    "@backstage/backend-common": "npm:^0.25.0"
+    "@backstage/backend-plugin-api": "npm:^1.4.3"
+    "@backstage/catalog-model": "npm:^1.7.5"
+    "@backstage/cli": "npm:^0.34.3"
+    "@backstage/config": "npm:^1.3.3"
+    "@joaopdss/genai-plugin-for-backstage-common": "workspace:^"
+    "@langchain/core": "npm:0.3.57"
+    aws-sdk-client-mock: "npm:^4.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@joaopdss/genai-plugin-for-backstage@workspace:^, @joaopdss/genai-plugin-for-backstage@workspace:plugins/genai/frontend":
+  version: 0.0.0-use.local
+  resolution: "@joaopdss/genai-plugin-for-backstage@workspace:plugins/genai/frontend"
+  dependencies:
+    "@backstage/cli": "npm:^0.34.3"
+    "@backstage/core-components": "npm:^0.18.0"
+    "@backstage/core-plugin-api": "npm:^1.11.0"
+    "@backstage/dev-utils": "npm:^1.1.14"
+    "@joaopdss/genai-plugin-for-backstage-common": "workspace:^"
+    "@material-ui/core": "npm:^4.12.2"
+    "@material-ui/icons": "npm:^4.9.1"
+    "@testing-library/dom": "npm:^9.0.0"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^14.0.0"
+    "@testing-library/user-event": "npm:^14.0.0"
+    eventsource-parser: "npm:^2.0.1"
+    msw: "npm:^1.0.0"
+    ts-pattern: "npm:^5.5.0"
+  peerDependencies:
+    react: ^16.13.1 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
+    react-router-dom: 6.0.0-beta.0 || ^6.3.0
+  languageName: unknown
+  linkType: soft
+
+"@joaopdss/genai-plugin-langgraph-agent-for-backstage@workspace:^, @joaopdss/genai-plugin-langgraph-agent-for-backstage@workspace:plugins/genai/agent-langgraph":
+  version: 0.0.0-use.local
+  resolution: "@joaopdss/genai-plugin-langgraph-agent-for-backstage@workspace:plugins/genai/agent-langgraph"
+  dependencies:
+    "@backstage/backend-plugin-api": "npm:^1.4.3"
+    "@backstage/catalog-model": "npm:^1.7.5"
+    "@backstage/cli": "npm:^0.34.3"
+    "@backstage/config": "npm:^1.3.3"
+    "@backstage/types": "npm:^1.2.2"
+    "@joaopdss/genai-plugin-for-backstage-common": "workspace:^"
+    "@joaopdss/genai-plugin-for-backstage-node": "workspace:^"
+    "@langchain/aws": "npm:0.1.10"
+    "@langchain/core": "npm:0.3.57"
+    "@langchain/langgraph": "npm:0.2.74"
+    "@langchain/langgraph-checkpoint-postgres": "npm:^0.0.5"
+    "@langchain/langgraph-checkpoint-sqlite": "npm:^0.1.5"
+    "@langchain/openai": "npm:^0.5.11"
+    langfuse-langchain: "npm:^3.29.1"
+    zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
 
 "@jridgewell/gen-mapping@npm:^0.3.12, @jridgewell/gen-mapping@npm:^0.3.2, @jridgewell/gen-mapping@npm:^0.3.5":
   version: 0.3.13
@@ -17257,7 +17257,6 @@ __metadata:
     "@aws/aws-codebuild-plugin-for-backstage": "workspace:^"
     "@aws/aws-codepipeline-plugin-for-backstage": "workspace:^"
     "@aws/cost-insights-plugin-for-backstage": "workspace:^"
-    "@aws/genai-plugin-for-backstage": "workspace:^"
     "@backstage-community/plugin-cost-insights": "npm:^0.22.0"
     "@backstage-community/plugin-github-actions": "npm:^0.14.0"
     "@backstage-community/plugin-tech-radar": "npm:^1.0.0"
@@ -17285,6 +17284,7 @@ __metadata:
     "@backstage/plugin-user-settings": "npm:^0.8.26"
     "@backstage/test-utils": "npm:^1.7.11"
     "@backstage/theme": "npm:^0.6.8"
+    "@joaopdss/genai-plugin-for-backstage": "workspace:^"
     "@material-ui/core": "npm:^4.12.2"
     "@material-ui/icons": "npm:^4.9.1"
     "@playwright/test": "npm:^1.32.3"
@@ -17979,8 +17979,6 @@ __metadata:
     "@aws/aws-codepipeline-plugin-for-backstage-backend": "workspace:^"
     "@aws/aws-core-plugin-for-backstage-scaffolder-actions": "workspace:^"
     "@aws/cost-insights-plugin-for-backstage-backend": "workspace:^"
-    "@aws/genai-plugin-for-backstage-backend": "workspace:^"
-    "@aws/genai-plugin-langgraph-agent-for-backstage": "workspace:^"
     "@backstage/backend-defaults": "npm:^0.12.1"
     "@backstage/backend-plugin-api": "npm:^1.4.3"
     "@backstage/catalog-client": "npm:^1.12.0"
@@ -18004,6 +18002,8 @@ __metadata:
     "@backstage/plugin-search-backend-module-techdocs": "npm:^0.4.6"
     "@backstage/plugin-search-backend-node": "npm:^1.3.15"
     "@backstage/plugin-techdocs-backend": "npm:^2.1.0"
+    "@joaopdss/genai-plugin-for-backstage-backend": "workspace:^"
+    "@joaopdss/genai-plugin-langgraph-agent-for-backstage": "workspace:^"
     "@types/dockerode": "npm:^3.3.0"
     app: "link:../app"
     better-sqlite3: "npm:^11.0.0"

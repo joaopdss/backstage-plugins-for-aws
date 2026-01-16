@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-import { AgentConfig, GenAIConfig } from '@aws/genai-plugin-for-backstage-node';
+import { AgentConfig, GenAIConfig } from '@joaopdss/genai-plugin-for-backstage-node';
 import { Config } from '@backstage/config';
 
 function getRootConfig(config: Config) {

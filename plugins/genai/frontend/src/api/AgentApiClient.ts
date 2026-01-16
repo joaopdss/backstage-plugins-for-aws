@@ -24,7 +24,7 @@ import {
   ChatSession,
   EndSessionRequest,
   EventSchema,
-} from '@aws/genai-plugin-for-backstage-common';
+} from '@joaopdss/genai-plugin-for-backstage-common';
 
 export class AgentApiClient implements AgentApi {
   private readonly discoveryApi: DiscoveryApi;

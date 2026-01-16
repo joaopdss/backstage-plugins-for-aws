@@ -1,0 +1,74 @@
+name: Publish GenAI Plugins
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build genai packages
+        run: |
+          yarn workspace @joaopdss/genai-plugin-for-backstage-common build
+          yarn workspace @joaopdss/genai-plugin-for-backstage-node build
+          yarn workspace @joaopdss/genai-plugin-for-backstage build
+          yarn workspace @joaopdss/genai-plugin-for-backstage-backend build
+          yarn workspace @joaopdss/genai-plugin-langgraph-agent-for-backstage build
+
+      - name: Bump versions
+        run: |
+          cd plugins/genai/common && npm version ${{ inputs.version_bump }} --no-git-tag-version
+          cd ../node && npm version ${{ inputs.version_bump }} --no-git-tag-version
+          cd ../frontend && npm version ${{ inputs.version_bump }} --no-git-tag-version
+          cd ../backend && npm version ${{ inputs.version_bump }} --no-git-tag-version
+          cd ../agent-langgraph && npm version ${{ inputs.version_bump }} --no-git-tag-version
+
+      - name: Publish to npm
+        run: |
+          cd plugins/genai/common && npm publish --access public
+          cd ../node && npm publish --access public
+          cd ../frontend && npm publish --access public
+          cd ../backend && npm publish --access public
+          cd ../agent-langgraph && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Commit version bumps
+        run: |
+          git add plugins/genai/*/package.json
+          git commit -m "chore: bump genai plugin versions"
+          git push
